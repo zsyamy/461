@@ -1,22 +1,28 @@
-Name:
-UWNetID:
+Somehow I can't upload the zip file to gradescope(its size too large). So I just upload every file.
 
-Name:
-UWNetID:
-
-Name:
-UWNetID:
+Name: Shiyun Zhou
+UWNetID: szhou362
 
 Instructions to reproduce the results:
-  TODO
+  Part2: sudo ./run.sh
+  Part3: sudo ./run_bbr.sh
 
 Answers to the questions:
 Part 2
-  1. TODO
-  2. TODO
-  3. TODO
-  4. TODO
+  1. When q = 20, the average webpage fetch time is 0.8509s and its standard deviation is 0.30084s
+When q = 100, the average webpage fetch time is 3.90143s and its standard deviation is 0.85328s.
+  2. For a smaller queue size (q = 20), the buffer become full and drop packets quickly, causing retransmissions. While for a larger queue size (q = 100), it takes more time to fill the queue, so it causes higher latency.
+  3. 1000 packets * 1500 bytes/packet * 8 bits/ byte / (100 Mb/s * 10^6 bit / 1Mb) = 0.12s
+  4. When the queue size is 20, the round-trip time (RTT) remains small, ranging from 100ms to 400ms when the queue size is 100, the RTT has a significant rise, ranging from 600ms to 1700ms. RTT is positively related to queue size.
+  5. - Active Queue Management (AQM): Its techniques actively monitor and manage the length of network buffers to prevent excessive queuing. By dropping or marking packets before queues become excessively large, AQM mechanisms like Controlled Delay (CoDel) aim to maintain low latency and prevent congestion collapse. It prioritizes latency-sensitive traffic and ensure fair bandwidth allocation, mitigating bufferbloat's impact on network performance.
+     - BBR solves bufferbloat by dynamically adjusting packet transmission rates based on real-time network conditions, using a source-based approach to congestion control, implementing packet pacing to regulate traffic flow, and maintaining low queue sizes to prevent excessive buffering.
+
 Part 3
-  1. TODO
-  2. TODO
-  3. TODO
+  1. When q = 20, the average webpage fetch time is 0.31787s and its standard deviation is 0.29193s
+When q = 100, the average webpage fetch time is 0.31927s and its standard deviation is 0.34457s.
+  2. Webpage fetch time between q=20 and q=100 are quite close, and webpage fetch time of q=20 is slightly lower. Compared to Part 2, where webpage fetch time is positively related to the queue size, it indicates that TCP BBR does better in solving bufferbloat problem.
+  3. The queue size graphs for q=20 falls in the range of 0-20 packets for Reno and 0-13 packets for BBR. The queue size graphs for q=100 falls in the range of 50-100 packets for Reno and 0-10 packets for BBR. We can see that BBR avoids buffer's overflow and controls the number of packets in a relatively small number. BBR achieves this by dynamically adjusting its sending rate based on feedback about the network's available bandwidth and latency. It employs a congestion control algorithm that aims to keep the pipe full but not congested, preventing the buffer from overflowing. Additionally, BBR utilizes packet pacing to regulate the rate of packet transmission, avoiding sudden bursts that can lead to buffer congestion.
+  4. Yes, BBR have significantly mitigated bufferbloat in many network environments. It achieves this by employing a congestion control approach that dynamically adjusts to network conditions. BBR uses techniques such as packet pacing to prevent bursts of packets. Additionally, BBR's proactive congestion control mechanisms ensure that average queue sizes remain low, unlike traditional algorithms like RENO. 
+
+
+If the code can't run, git clone https://github.com/zsyamy/461.git 
